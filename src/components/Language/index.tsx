@@ -2,7 +2,7 @@
 import { useLocale } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
-import "./style.css";
+// import "./style.css";
 
 export default function Lang() {
   // const [isPending, startTransition] = useTransition();
@@ -15,11 +15,11 @@ export default function Lang() {
 
   return (
     <main>
-      <div className="background-container">
-        <h4 className="fw-bold text-center pt-2" style={{ color: "white" }}>
+      <div className="container">
+        <h5 className="fw-bold text-center pt-2 mt-2">
           Please select your language
-        </h4>
-        <div className="d-flex flex-column align-items-center">
+        </h5>
+        <div className="d-flex flex-column align-items-center mt-3">
           <div className="my-2">
             <button
               type="button"

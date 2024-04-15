@@ -6,9 +6,9 @@ export default function Nav() {
       <li className="nav-item">
         <a className="nav-link active" aria-current="page" href="#">
           <Image
-            src="/icons/Logo.jpg"
+            src="/icons/logo.png"
             width={70}
-            height={45}
+            height={40}
             alt=""
           />
         </a>

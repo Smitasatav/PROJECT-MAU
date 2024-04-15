@@ -1,5 +1,5 @@
 import { useTranslations } from "next-intl";
-import Link from "next/link";
+import { Link } from "@/i18n";
 
 export default function Guidelines() {
   const t = useTranslations("Guidelines");
@@ -71,9 +71,11 @@ export default function Guidelines() {
           </Link>
         </div>
         <div>
+        <Link href="/Add-Form">
           <button className="btn btn-primary" type="button">
             Next
           </button>
+          </Link>
         </div>
       </div>
     </div>
