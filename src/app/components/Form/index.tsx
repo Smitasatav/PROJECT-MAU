@@ -1,11 +1,13 @@
-import React from "react";
-
+import React, { useState } from "react";
 import classNames from "classnames";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
+import ReCAPTCHA from "react-google-recaptcha";
 import Link from "next/link";
 import { userDef } from "@/app/components/types";
 import { initValue } from "./config.js";
+import Image from "next/image";
+// import img1 from "@/images/new cat.jpg";
 
 interface props {
   submitBtnLable: string;
@@ -18,7 +20,7 @@ const SignupSchema = Yup.object().shape({
   //   location: Yup.string()
   //     .oneOf(["Pune", "PCMC"], "Please select a valid area")
   //     .required("Please select an area"),
-  name: Yup.string().min(2).max(25).required("Please enter your name"),
+  name: Yup.string().min(4).max(25).required("Please enter your name"),
 
   number: Yup.string()
     .matches(/^\d{10}$/, "Please enter a 10-digit number")
@@ -32,13 +34,16 @@ const SignupSchema = Yup.object().shape({
     .matches(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, "Please enter a valid email address")
     .required("Please enter your email address"),
 
-  house: Yup.string().min(5).max(25).required("Please enter valid address"),
+  house: Yup.string().min(5).max(50).required("Please enter valid address"),
 
   area: Yup.string().min(5).max(25).required("Please enter valid address"),
 
   landmark: Yup.string().min(5).max(25).required("Please enter valid address"),
 
-  pincode: Yup.string().min(6).max(6).required("Please enter valid pincode"),
+  pincode: Yup.string()
+    .min(6)
+    .max(6)
+    .required("Please enter your valid pincode"),
 
   adhar: Yup.string()
     .min(12)
@@ -51,7 +56,21 @@ const SignupSchema = Yup.object().shape({
     .required("Please enter your PAN card number"),
 });
 
-export default function UserForm({ submitBtnLable, user, title, save }: props) {
+const UserForm: React.FC<props> = ({ submitBtnLable, user, save }) => {
+  const [isCaptchaVerified, setIsCaptchaVerified] = useState(false);
+
+  const handleCaptchaVerify = () => {
+    setIsCaptchaVerified(true);
+  };
+
+  const handleSubmit = (values: userDef) => {
+    if (isCaptchaVerified) {
+      save(values);
+    } else {
+      alert("Please verify reCAPTCHA.");
+    }
+  };
+
   return (
     <main>
       <h3 className="text-center">REGISTER HERE</h3>
@@ -66,8 +85,24 @@ export default function UserForm({ submitBtnLable, user, title, save }: props) {
             <div className="d-flex justify-content-center">
               <Form
                 className="row g-3 card mt-3 p-3 col-md-6"
-                style={{ backgroundColor: "gainsboro" }}
+                style={{ backgroundColor: "lightblue" }}
+                // gainboro
               >
+                {/* Image */}
+                <Image
+                  src="/images/cat.jpg"
+                  alt=""
+                  width={50}
+                  height={50}
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    right: 0,
+                    width: "100px",
+                    height: "100px",
+                  }}
+                />
+
                 {/* for location */}
                 <div>
                   <label className="col-sm-2-col-form-label">
@@ -140,7 +175,7 @@ export default function UserForm({ submitBtnLable, user, title, save }: props) {
                       <b>Alternate Phone Number</b>
                     </label>
                     <Field
-                      name="alt-number"
+                      name="alt_number"
                       type="number"
                       placeholder="Enter Your Alternate Number"
                       className={classNames("form-control", {
@@ -155,6 +190,14 @@ export default function UserForm({ submitBtnLable, user, title, save }: props) {
                     )}
                   </div>
                 </div>
+
+                {values.number === values.alt_number &&
+                  values.number !== "" &&
+                  values.alt_number !== "" && (
+                    <div className="text-danger">
+                      Phone numbers cannot be the same
+                    </div>
+                  )}
 
                 {/* for Email id */}
                 <div>
@@ -242,7 +285,7 @@ export default function UserForm({ submitBtnLable, user, title, save }: props) {
                     )}
                   </div>
 
-                  {/* area, street, sector */}
+                  {/* pincode */}
                   <div className="flex-grow-1 ms-2">
                     <label className="col-sm-2-col-form-label">Pincode</label>
                     <Field
@@ -292,6 +335,7 @@ export default function UserForm({ submitBtnLable, user, title, save }: props) {
                     <label className="col-sm-2-col-form-label">Female</label>
                     <Field
                       name="female"
+                      type="number"
                       placeholder="Number of Cats"
                       className={classNames("form-control", {
                         "is-invalid": touched.gender && errors.gender,
@@ -331,6 +375,26 @@ export default function UserForm({ submitBtnLable, user, title, save }: props) {
                       "is-invalid": touched.illness && errors.illness,
                     })}
                   />
+                </div>
+
+                {/* Picture upload field  */}
+                <div>
+                  <label className="col-sm-2-col-form-label">
+                    <b>Upload Pictures of Your Cats</b>
+                  </label>
+
+                  <div className="form-control d-flex align-items-center">
+                    <input
+                      type="file"
+                      name="pictures"
+                      accept="image/*"
+                      className="form-control flex-grow-1"
+                      multiple // Allow multiple picture uploads
+                    />
+                    <button type="button" className="btn btn-primary ms-3">
+                      Upload
+                    </button>
+                  </div>
                 </div>
 
                 {/* for vaccination  */}
@@ -515,7 +579,6 @@ export default function UserForm({ submitBtnLable, user, title, save }: props) {
                         to take care of them.
                       </i>
                     </div>
-                    {/* <i> (Only if Feral Cats are wary of People)</i> */}
                   </label>
 
                   <div className="radio-group">
@@ -539,6 +602,13 @@ export default function UserForm({ submitBtnLable, user, title, save }: props) {
                     </div>
                   </div>
                 </div>
+
+                {/* for recaptch */}
+
+                <ReCAPTCHA
+                  sitekey="6Ldku7spAAAAAIB1X6iEOfsmEQnYsx_SRj0yIrpg"
+                  onChange={handleCaptchaVerify}
+                />
 
                 {/* for buttons */}
 
@@ -574,46 +644,6 @@ export default function UserForm({ submitBtnLable, user, title, save }: props) {
       </Formik>
     </main>
   );
-}
+};
 
-{
-  /* for phone number */
-}
-//  <div>
-//  <label className="col-sm-2-col-form-label">
-//    <b>Phone Number</b>
-//  </label>
-//  <Field
-//    name="number"
-//    type="number"
-//    placeholder="Enter Your Number"
-//    className={classNames("form-control", {
-//      "is-invalid": touched.number && errors.number,
-//    })}
-//  />
-//  {errors.number && touched.number && (
-//    <div className="invalid-feedback">{errors.number}</div>
-//  )}
-// </div>
-
-{
-  /* for  alternate phone number */
-}
-{
-  /* <div>
- <label className="col-sm-2-col-form-label">
-   <b>Alternate Phone Number</b>
- </label>
- <Field
-   name="alt-number"
-   type="number"
-   placeholder="Enter Your Number"
-   className={classNames("form-control", {
-     "is-invalid": touched.alt_number && errors.alt_number,
-   })}
- />
- {errors.alt_number && touched.alt_number && (
-   <div className="invalid-feedback">{errors.alt_number}</div>
- )}
-</div> */
-}
+export default UserForm;
