@@ -16,9 +16,9 @@ export default function Lang() {
   return (
     <main>
       <div className="container">
-        <h5 className="fw-bold text-center pt-2 mt-2">
+        <h4 className="fw-bold text-center pt-2 mt-2">
           Please select your language
-        </h5>
+        </h4>
         <div className="d-flex flex-column align-items-center mt-3">
           <div className="my-2">
             <button

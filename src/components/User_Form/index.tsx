@@ -8,6 +8,7 @@ import { userDef } from "@/components/types.js";
 import { initValue } from "./config.js";
 import Image from "next/image";
 import FormField from "@/components/FormField";
+import { useTranslations } from "next-intl";
 
 interface props {
   submitBtnLable: string;
@@ -71,9 +72,11 @@ const UserForm: React.FC<props> = ({ submitBtnLable, user, save }) => {
     }
   };
 
+  const t = useTranslations("Form");
+
   return (
     <main>
-      <h4 className="fw-bold text-center my-2">REGISTER HERE</h4>
+      <h4 className="fw-bold text-center my-2">{t("lable")}</h4>
       <Formik
         initialValues={user ? user : initValue}
         validationSchema={SignupSchema}
@@ -99,7 +102,7 @@ const UserForm: React.FC<props> = ({ submitBtnLable, user, save }) => {
                       top: 0,
                       right: 0,
                       width: "70px",
-                      height: "60px",
+                      height: "70px",
                     }}
                   />
                 </div>
@@ -107,7 +110,7 @@ const UserForm: React.FC<props> = ({ submitBtnLable, user, save }) => {
                 {/* for location */}
                 <div>
                   <label className="col-sm-2-col-form-label">
-                    <b>Area</b>
+                    <b>{t("area")}</b>
                   </label>
                   <div className="radio-group">
                     <div className="form-check form-check-inline">
@@ -117,7 +120,7 @@ const UserForm: React.FC<props> = ({ submitBtnLable, user, save }) => {
                         value="Pune"
                         className="form-check-input"
                       />
-                      <label className="form-check-label">Pune</label>
+                      <label className="form-check-label">{t("pune")}</label>
                     </div>
                     <div className="form-check form-check-inline">
                       <Field
@@ -126,16 +129,16 @@ const UserForm: React.FC<props> = ({ submitBtnLable, user, save }) => {
                         value="PCMC"
                         className="form-check-input"
                       />
-                      <label className="form-check-label">PCMC</label>
+                      <label className="form-check-label">{t("pcmc")}</label>
                     </div>
                   </div>
                 </div>
 
                 {/* for name */}
                 <FormField
-                  label="Full Name"
+                  label={t("name_1")}
                   name="name"
-                  placeholder="Enter Your Name"
+                  placeholder={t("name_field")}
                   type="text"
                   errors={errors}
                   touched={touched}
@@ -146,9 +149,9 @@ const UserForm: React.FC<props> = ({ submitBtnLable, user, save }) => {
                   {/* Phone Number */}
                   <div className="flex-grow-1 me-2">
                     <FormField
-                      label="Phone Number"
+                      label={t("ph_1")}
                       name="number"
-                      placeholder="Enter Your Number"
+                      placeholder={t("phone_field")}
                       type="number"
                       errors={errors}
                       touched={touched}
@@ -158,9 +161,9 @@ const UserForm: React.FC<props> = ({ submitBtnLable, user, save }) => {
                   {/* Alternate Phone Number */}
                   <div className="flex-grow-1 ms-2">
                     <FormField
-                      label="Alternate Phone Number"
+                      label={t("ph_2")}
                       name="alt-number"
-                      placeholder="Enter Your Alternate Number"
+                      placeholder={t("phone_field_1")}
                       type="number"
                       errors={errors}
                       touched={touched}
@@ -172,16 +175,16 @@ const UserForm: React.FC<props> = ({ submitBtnLable, user, save }) => {
                   values.number !== "" &&
                   values.alt_number !== "" && (
                     <div className="text-danger">
-                      Phone numbers cannot be the same
+                     {t("ph_not_same")}
                     </div>
                   )}
 
                 {/* for Email id */}
                 <div>
                   <FormField
-                    label="Email ID"
+                    label={t("email")}
                     name="email"
-                    placeholder="Enter Your Email ID"
+                    placeholder={t("email_field")}
                     errors={errors}
                     touched={touched}
                   />
@@ -197,15 +200,15 @@ const UserForm: React.FC<props> = ({ submitBtnLable, user, save }) => {
                     </h6> */}
                     <div>
                       <label className="col-sm-2-col-form-label">
-                        <b>Full Address</b>
+                        <b>{t("address_1")} </b>
                       </label>
                     </div>
                     <label className="col-sm-2-col-form-label">
-                      Flat, House, Building, Apartment
+                    {t("address_2")}
                     </label>
                     <Field
                       name="house"
-                      placeholder="Enter Your Address"
+                      placeholder={t("address_field")}
                       className={classNames("form-control", {
                         "is-invalid": touched.house && errors.house,
                       })}
@@ -222,11 +225,11 @@ const UserForm: React.FC<props> = ({ submitBtnLable, user, save }) => {
                       <label className="col-sm-2-col-form-label"></label>
                     </div>
                     <label className="col-sm-2-col-form-label">
-                      Area, street, Sector
+                    {t("address_3")}
                     </label>
                     <Field
                       name="area"
-                      placeholder="Enter Your Address"
+                      placeholder={t("address_field")}
                       className={classNames("form-control", {
                         "is-invalid": touched.area && errors.area,
                       })}
@@ -241,10 +244,10 @@ const UserForm: React.FC<props> = ({ submitBtnLable, user, save }) => {
                 <div className="d-flex">
                   {/* landmark */}
                   <div className="flex-grow-1 me-2">
-                    <label className="col-sm-2-col-form-label">Landmark</label>
+                    <label className="col-sm-2-col-form-label"> {t("address_4")}</label>
                     <Field
                       name="landmark"
-                      placeholder="Enter Your Address"
+                      placeholder={t("address_field")}
                       className={classNames("form-control", {
                         "is-invalid": touched.house && errors.house,
                       })}
@@ -257,11 +260,11 @@ const UserForm: React.FC<props> = ({ submitBtnLable, user, save }) => {
 
                   {/* pincode */}
                   <div className="flex-grow-1 ms-2">
-                    <label className="col-sm-2-col-form-label">Pincode</label>
+                    <label className="col-sm-2-col-form-label">{t("address_5")}</label>
                     <Field
                       name="pincode"
                       type="number"
-                      placeholder="Enter Your Pincode"
+                      placeholder={t("pincode_field")}
                       className={classNames("form-control", {
                         "is-invalid": touched.pincode && errors.pincode,
                       })}
@@ -278,15 +281,15 @@ const UserForm: React.FC<props> = ({ submitBtnLable, user, save }) => {
                   <div className="flex-grow-1 me-2">
                     <div>
                       <label className="col-sm-2-col-form-label">
-                        <b>Number of Cats with Gender</b>
+                        <b>{t("no-of-cat")}</b>
                       </label>
                     </div>
                     {/* for male */}
-                    <label className="col-sm-2-col-form-label">Male</label>
+                    <label className="col-sm-2-col-form-label">{t("male")}</label>
                     <Field
                       name="male"
                       type="number"
-                      placeholder="Number of Cats"
+                      placeholder={t("no_of_cat")}
                       className={classNames("form-control", {
                         "is-invalid": touched.gender && errors.gender,
                       })}
@@ -302,11 +305,11 @@ const UserForm: React.FC<props> = ({ submitBtnLable, user, save }) => {
                     <div>
                       <label className="col-sm-2-col-form-label"></label>
                     </div>
-                    <label className="col-sm-2-col-form-label">Female</label>
+                    <label className="col-sm-2-col-form-label">{t("female")}</label>
                     <Field
                       name="female"
                       type="number"
-                      placeholder="Number of Cats"
+                      placeholder={t("no_of_cat")}
                       className={classNames("form-control", {
                         "is-invalid": touched.gender && errors.gender,
                       })}
@@ -321,7 +324,7 @@ const UserForm: React.FC<props> = ({ submitBtnLable, user, save }) => {
                 {/* age of cat */}
                 <div>
                   <label className="col-sm-2-col-form-label">
-                    If any cat age below one year. Please mention here
+                  {t("instruction-1")}
                   </label>
                   <Field
                     name="age"
@@ -335,7 +338,7 @@ const UserForm: React.FC<props> = ({ submitBtnLable, user, save }) => {
 
                 <div>
                   <label className="col-sm-2-col-form-label">
-                    Any Previous Recent Surgery,Illness or Pregenancy?
+                  {t("instruction-2")}
                   </label>
                   <Field
                     name="illness"
@@ -350,7 +353,7 @@ const UserForm: React.FC<props> = ({ submitBtnLable, user, save }) => {
                 {/* Picture upload field  */}
                 <div>
                   <label className="col-sm-2-col-form-label">
-                    <b>Upload Pictures of Your Cats</b>
+                    <b>{t("uplod_pics")}</b>
                   </label>
 
                   <div className="form-control d-flex align-items-center">
@@ -362,7 +365,7 @@ const UserForm: React.FC<props> = ({ submitBtnLable, user, save }) => {
                       multiple // Allow multiple picture uploads
                     />
                     <button type="button" className="btn btn-primary ms-3">
-                      Upload
+                    {t("upload")}
                     </button>
                   </div>
                 </div>
@@ -371,7 +374,7 @@ const UserForm: React.FC<props> = ({ submitBtnLable, user, save }) => {
 
                 <div>
                   <label className="col-sm-2-col-form-label">
-                    <b>Vaccination </b>(Tri-Cat)
+                    <b> {t("vaccination-1")} </b> {t("vaccination-2")}
                   </label>
                   <div
                     style={{
@@ -381,10 +384,8 @@ const UserForm: React.FC<props> = ({ submitBtnLable, user, save }) => {
                     }}
                   >
                     <i>
-                      Vaccination is paid and won't be sponsered. Charges for
-                      vaccine is 1000/- per cat.
-                      <br /> "Bringing your cat without vaccination is at your
-                      own risk."
+                    {t("vaccination-inst-1")}
+                      <br /> {t("vaccination-inst-2")}
                     </i>
                   </div>
                   <div className="radio-group">
@@ -395,7 +396,7 @@ const UserForm: React.FC<props> = ({ submitBtnLable, user, save }) => {
                         value="yes"
                         className="form-check-input"
                       />
-                      <label className="form-check-label">Yes</label>
+                      <label className="form-check-label">{t("yes")}</label>
                     </div>
                     <div className="form-check form-check-inline">
                       <Field
@@ -404,17 +405,17 @@ const UserForm: React.FC<props> = ({ submitBtnLable, user, save }) => {
                         value="no"
                         className="form-check-input"
                       />
-                      <label className="form-check-label">No</label>
+                      <label className="form-check-label">{t("no")}</label>
                     </div>
                   </div>
                 </div>
 
                 {/* for adhar card number */}
                 <FormField
-                  label="Adhar Card Number"
+                  label={t("adhar")}
                   name="adhar"
                   type="number"
-                  placeholder="Enter Your Adhar-Card Number"
+                  placeholder={t("adhar_field")}
                   errors={errors}
                   touched={touched}
                 />
@@ -422,11 +423,11 @@ const UserForm: React.FC<props> = ({ submitBtnLable, user, save }) => {
                 {/* for pan card number */}
                 <div>
                   <label className="col-sm-2-col-form-label">
-                    <b>PAN Card Number </b> (If donating)
+                    <b>{t("pan_1")}</b>{t("pan_2")}
                   </label>
                   <Field
                     name="pan"
-                    placeholder="Enter Your PAN Number"
+                    placeholder={t("pan_field")}
                     className={classNames("form-control", {
                       "is-invalid": touched.pan && errors.pan,
                     })}
@@ -441,8 +442,8 @@ const UserForm: React.FC<props> = ({ submitBtnLable, user, save }) => {
 
                 <div>
                   <label className="col-sm-2-col-form-label">
-                    <b>Need of Transport</b>
-                    <i> (It is paid & won't be sponsored)</i>
+                    <b>{t("transport-1")}</b>
+                    <i> {t("transport-2")}</i>
                   </label>
                   <div className="radio-group">
                     <div className="form-check form-check-inline">
@@ -452,7 +453,7 @@ const UserForm: React.FC<props> = ({ submitBtnLable, user, save }) => {
                         value="yes"
                         className="form-check-input"
                       />
-                      <label className="form-check-label">Yes</label>
+                      <label className="form-check-label">{t("yes")}</label>
                     </div>
                     <div className="form-check form-check-inline">
                       <Field
@@ -461,7 +462,7 @@ const UserForm: React.FC<props> = ({ submitBtnLable, user, save }) => {
                         value="no"
                         className="form-check-input"
                       />
-                      <label className="form-check-label">No</label>
+                      <label className="form-check-label">{t("no")}</label>
                     </div>
                   </div>
                 </div>
@@ -471,9 +472,9 @@ const UserForm: React.FC<props> = ({ submitBtnLable, user, save }) => {
                 {values.transport === "yes" && (
                   <>
                     <FormField
-                      label="GPS Location"
+                      label={t("gps_1")}
                       name="gpsLocation"
-                      placeholder="Paste your Google Location Here"
+                      placeholder={t("gps_2")}
                       errors={errors}
                       touched={touched}
                     />
@@ -481,8 +482,8 @@ const UserForm: React.FC<props> = ({ submitBtnLable, user, save }) => {
                     {/* for traps */}
                     <div>
                       <label className="col-sm-2-col-form-label">
-                        <b>Need of Traps</b>
-                        <i> (Only if Feral Cats are wary of People)</i>
+                        <b>{t("traps_1")}</b>
+                        <i> {t("traps_2")}</i>
                       </label>
                       <div className="radio-group">
                         <div className="form-check form-check-inline">
@@ -492,7 +493,7 @@ const UserForm: React.FC<props> = ({ submitBtnLable, user, save }) => {
                             value="yes"
                             className="form-check-input"
                           />
-                          <label className="form-check-label">Yes</label>
+                          <label className="form-check-label">{t("yes")}</label>
                         </div>
                         <div className="form-check form-check-inline">
                           <Field
@@ -501,7 +502,7 @@ const UserForm: React.FC<props> = ({ submitBtnLable, user, save }) => {
                             value="no"
                             className="form-check-input"
                           />
-                          <label className="form-check-label">No</label>
+                          <label className="form-check-label">{t("no")}</label>
                         </div>
                       </div>
                     </div>
@@ -512,7 +513,7 @@ const UserForm: React.FC<props> = ({ submitBtnLable, user, save }) => {
 
                 <div>
                   <label className="col-sm-2-col-form-label">
-                    <b>Post Operative Care</b>
+                    <b>{t("post-op-1")}</b>
                     <div
                       style={{
                         fontStyle: "italic",
@@ -521,10 +522,7 @@ const UserForm: React.FC<props> = ({ submitBtnLable, user, save }) => {
                       }}
                     >
                       <i>
-                        Cats need post operative care after surgery to recover
-                        from the effects of anesthesia and to keep them
-                        vulnerable. Please click "Yes" only if you are not able
-                        to take care of them.
+                      {t("post-op-2")}
                       </i>
                     </div>
                   </label>
@@ -537,7 +535,7 @@ const UserForm: React.FC<props> = ({ submitBtnLable, user, save }) => {
                         value="yes"
                         className="form-check-input"
                       />
-                      <label className="form-check-label">Yes</label>
+                      <label className="form-check-label">{t("yes")}</label>
                     </div>
                     <div className="form-check form-check-inline">
                       <Field
@@ -546,7 +544,7 @@ const UserForm: React.FC<props> = ({ submitBtnLable, user, save }) => {
                         value="no"
                         className="form-check-input"
                       />
-                      <label className="form-check-label">No</label>
+                      <label className="form-check-label">{t("no")}</label>
                     </div>
                   </div>
                 </div>
@@ -563,7 +561,7 @@ const UserForm: React.FC<props> = ({ submitBtnLable, user, save }) => {
                   <div className="d-flex flex-row mb-3">
                     <div className=" p-3">
                       <button type="submit" className="btn btn-primary">
-                        Submit
+                      {t("submit")}
                       </button>
                     </div>
                     <div className="p-3">
@@ -572,13 +570,13 @@ const UserForm: React.FC<props> = ({ submitBtnLable, user, save }) => {
                         className="btn btn-warning"
                         // onClick={clearForm}
                       >
-                        Clear
+                         {t("clear")}
                       </button>
                     </div>
                     <div className="p-3 ">
                       <Link href="/">
                         <button type="button" className="btn btn-danger">
-                          Cancel
+                        {t("cancel")}
                         </button>
                       </Link>
                     </div>
