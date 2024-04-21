@@ -1,8 +1,15 @@
+"use client"
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n";
+import { useState } from "react";
 
 export default function Guidelines() {
+  const [isChecked, setIsChecked] = useState(false);
   const t = useTranslations("Guidelines");
+
+  const handleCheckboxChange = (e) => {
+    setIsChecked(e.target.checked);
+  };
   return (
     <div className="container">
       <h5 className="fw-bold text-center my-3">{t("heading")}</h5>
@@ -51,12 +58,13 @@ export default function Guidelines() {
         </li>
       </ol>
       <div className="form-check mt-2">
-        <input
+      <input
           className="form-check-input"
           type="checkbox"
-          defaultValue=""
+          value=""
           id="flexCheckChecked"
-          defaultChecked=""
+          checked={isChecked}
+          onChange={handleCheckboxChange}
         />
         <label className="form-check-label fw-bold" htmlFor="flexCheckChecked">
           {t("agree")}
@@ -66,17 +74,21 @@ export default function Guidelines() {
         <div>
           <Link href="/">
             <button className="btn btn-primary" type="button">
-              Back
+              {t("back")}
             </button>
           </Link>
         </div>
         <div>
-        <Link href="/Add-Form">
-          <button className="btn btn-primary" type="button">
-            Next
-          </button>
+          <Link href={isChecked ? "/Add-Form" : "#"}>
+            <button
+              className="btn btn-primary"
+              type="button"
+              disabled={!isChecked}
+            >
+              {t("next")}
+            </button>
           </Link>
-        </div>
+        </div>       
       </div>
     </div>
   );
