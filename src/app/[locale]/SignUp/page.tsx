@@ -1,11 +1,11 @@
 "use client";
 import React, { useState } from "react";
-import { signInWithEmailAndPassword, getAuth } from "firebase/auth";
+import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
 import Image from "next/image";
 import { app } from "@/components/firebase";
 
 const auth = getAuth(app);
-export default function signIn() {
+export default function signUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -19,19 +19,21 @@ export default function signIn() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    signInWithEmailAndPassword(auth, email, password)
+    createUserWithEmailAndPassword(auth, email, password)
       .then((value) => {
         // Handle successful login
-        console.log("Login Successful");
+        console.log(value);
+        alert("Account Created");
       })
       .catch((error) => {
         // Handle errors
-        console.error("Error: User does not exist");
+        console.error("Error signing up:", error.message);
+        alert("Account already exist");
       });
   };
   return (
     <div className="container">
-      <h4 className="fw-bold text-center my-3">Login Here</h4>
+      <h4 className="fw-bold text-center my-3">SignUp Here</h4>
       <div className="d-flex justify-content-center">
         <form
           className="row g-3 card my-2 p-2 col-md-6"
@@ -97,7 +99,7 @@ export default function signIn() {
             <div className="d-flex flex-row mb-2 justify-content-center">
               <div className="p-2">
                 <button type="submit" className="fw-bold btn btn-primary px-3">
-                  Login
+                  SignUp
                 </button>
               </div>
             </div>

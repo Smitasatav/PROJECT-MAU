@@ -23,7 +23,7 @@ export default function Lang() {
           <div className="my-2">
             <button
               type="button"
-              className="btn btn-primary"
+              className="btn btn-primary p-2"
               onClick={() => onSelectChange("en")}
             >
               ENGLISH
@@ -32,7 +32,7 @@ export default function Lang() {
           <div className="my-2">
             <button
               type="button"
-              className="btn btn-primary"
+              className="btn btn-primary py-2 px-3"
               onClick={() => onSelectChange("hi")}
             >
               हिंदी
@@ -41,7 +41,7 @@ export default function Lang() {
           <div className="my-2">
             <button
               type="button"
-              className="btn btn-primary"
+              className="btn btn-primary py-2 px-3"
               onClick={() => onSelectChange("mh")}
             >
               मराठी
