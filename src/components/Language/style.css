@@ -1,0 +1,7 @@
+.container {
+  background-image: url("/icons/cat.jpg");
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  /* background-color: brown; */
+}

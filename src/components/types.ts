@@ -1,4 +1,4 @@
-export interface userDef {
+export interface requestDef {
   user?: string;
   location: string;
   name: string;
@@ -7,12 +7,17 @@ export interface userDef {
   email: string;
 
   //   for address
-  house: string;
-  area: string;
-  landmark: string;
-  pincode: string;
+  full_address: {
+    house: string;
+    area: string;
+    landmark: string;
+    pincode: string;
+  };
   //
-  gender: string;
+  cats: {
+    male: number; // Number of male cats
+    female: number; // Number of female cats
+  };
   age: string;
   illness: string;
   gpsLocation: string;
