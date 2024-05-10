@@ -4,7 +4,7 @@ import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import ReCAPTCHA from "react-google-recaptcha";
 import Link from "next/link";
-import { userDef } from "@/components/types.js";
+import { requestDef } from "@/components/types.js";
 import { initValue } from "./config.js";
 import Image from "next/image";
 import FormField from "@/components/FormField";
@@ -13,8 +13,8 @@ import { useTranslations } from "next-intl";
 interface props {
   submitBtnLable: string;
   title?: string;
-  user?: userDef;
-  save: (user: userDef) => void; // Define the save function type
+  user?: requestDef;
+  save: (user: requestDef) => void; // Define the save function type
 }
 
 const SignupSchema = Yup.object().shape({
@@ -64,7 +64,7 @@ const UserForm: React.FC<props> = ({ submitBtnLable, user, save }) => {
     setIsCaptchaVerified(true);
   };
 
-  const handleSubmit = (values: userDef) => {
+  const handleSubmit = (values: requestDef) => {
     if (isCaptchaVerified) {
       save(values);
     } else {

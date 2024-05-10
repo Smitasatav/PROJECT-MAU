@@ -1,4 +1,4 @@
-export interface userDef {
+export interface requestDef {
     user?: string;
     location: string;
     name: string;

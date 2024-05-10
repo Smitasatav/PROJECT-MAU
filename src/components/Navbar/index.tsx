@@ -36,7 +36,7 @@ export default function Nav() {
           <div className="offcanvas-body">
             <ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
               <li className="nav-item" onClick={closeMenu}>
-                <Link className="fw-bold nav-link" href="/Admin_Login">
+                <Link className="fw-bold nav-link" href="/SignInWithPhone">
                   ADMIN
                 </Link>
               </li>
