@@ -7,7 +7,7 @@ export default function Guidelines() {
   const [isChecked, setIsChecked] = useState(false);
   const t = useTranslations("Guidelines");
 
-  const handleCheckboxChange = (e) => {
+  const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIsChecked(e.target.checked);
   };
   return (

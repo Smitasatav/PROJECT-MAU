@@ -1,4 +1,6 @@
 import { initializeApp } from "firebase/app";
+import { getFirestore, collection, addDoc } from "firebase/firestore";
+
 const firebaseConfig = {
   apiKey: "AIzaSyBLxkJ2xrbXVk1jrXFoF0_okHpvpL6PVFg",
   authDomain: "project-mau-227ed.firebaseapp.com",
@@ -9,3 +11,7 @@ const firebaseConfig = {
 };
 
 export const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+export const insertDocument = (cName: string, doc: any) =>
+  addDoc(collection(db, cName), doc);
