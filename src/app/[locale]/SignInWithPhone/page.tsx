@@ -11,6 +11,8 @@ import PhoneInput from "react-phone-input-2";
 import OtpInput from "react-otp-input";
 import "react-phone-input-2/lib/style.css";
 import { app } from "@/components/firebase";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const auth = getAuth(app);
 
@@ -31,6 +33,7 @@ export default function PhoneSignIn() {
       );
       setConfirmationResult(confirmation);
       console.log("OTP sent successfully!");
+      toast("OTP sent successfully!");
     } catch (error) {
       console.log("Error sending OTP:", error);
     }
@@ -42,6 +45,7 @@ export default function PhoneSignIn() {
         const code = otp;
         await confirmationResult.confirm(code);
         console.log("User signed in successfully!");
+        toast("User signed in successfully!");
       } else {
         throw new Error("Confirmation result is not available.");
       }
@@ -99,6 +103,7 @@ export default function PhoneSignIn() {
                 Send OTP
               </button>
             </div>
+            <ToastContainer />
           </div>
           <div
             id="recaptcha-container"
@@ -133,6 +138,7 @@ export default function PhoneSignIn() {
                 Verify OTP
               </button>
             </div>
+            <ToastContainer />
           </div>
         </div>
       </div>

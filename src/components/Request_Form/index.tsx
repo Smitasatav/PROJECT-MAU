@@ -9,6 +9,7 @@ import { Link } from "@/i18n";
 import { requestDef } from "@/components/types";
 import initValue, { sitekey } from "./config";
 import Image from "next/image";
+import FormField from "../FormField";
 
 interface props {
   submitBtnLable: string;
@@ -74,14 +75,14 @@ const RequestForm: React.FC<props> = (props) => {
       alert("Please verify reCAPTCHA.");
     }
   };
+  const t = useTranslations("Form");
 
   return (
     <main>
-      <h4 className="fw-bold text-center my-2">REGISTER HERE</h4>
-
+      <h4 className="fw-bold text-center my-2">{t("lable")}</h4>
       <Formik
         initialValues={user ? user : initValue}
-        // validationSchema={SignupSchema}
+        validationSchema={SignupSchema}
         onSubmit={handleSubmitWithCaptcha}
       >
         {({ errors, touched, values, handleSubmit }) => (
@@ -95,25 +96,25 @@ const RequestForm: React.FC<props> = (props) => {
                 >
                   {/* Image */}
                   <div>
-                  <Image
-                    src="/icons/cat.jpg"
-                    alt=""
-                    width={50}
-                    height={50}
-                    style={{
-                      position: "absolute",
-                      top: 0,
-                      right: 0,
-                      width: "70px",
-                      height: "70px",
-                    }}
-                  />
-                </div>
+                    <Image
+                      src="/icons/cat.jpg"
+                      alt=""
+                      width={50}
+                      height={50}
+                      style={{
+                        position: "absolute",
+                        top: 0,
+                        right: 0,
+                        width: "70px",
+                        height: "70px",
+                      }}
+                    />
+                  </div>
 
                   {/* for location */}
                   <div>
                     <label className="col-sm-2-col-form-label">
-                      <b>Area</b>
+                      <b>{t("area")}</b>
                     </label>
                     <div className="radio-group">
                       <div className="form-check form-check-inline">
@@ -123,7 +124,7 @@ const RequestForm: React.FC<props> = (props) => {
                           value="Pune"
                           className="form-check-input"
                         />
-                        <label className="form-check-label">Pune</label>
+                        <label className="form-check-label">{t("pune")}</label>
                       </div>
                       <div className="form-check form-check-inline">
                         <Field
@@ -132,7 +133,7 @@ const RequestForm: React.FC<props> = (props) => {
                           value="PCMC"
                           className="form-check-input"
                         />
-                        <label className="form-check-label">PCMC</label>
+                        <label className="form-check-label">{t("pcmc")}</label>
                       </div>
                     </div>
                   </div>
@@ -140,11 +141,11 @@ const RequestForm: React.FC<props> = (props) => {
                   {/* for name */}
                   <div>
                     <label className="col-sm-2-col-form-label">
-                      <b>Full name</b>
+                      <b>{t("name_1")}</b>
                     </label>
                     <Field
                       name="name"
-                      placeholder="Enter Your Name"
+                      placeholder={t("name_field")}
                       className={classNames("form-control", {
                         "is-invalid": touched.name && errors.name,
                       })}
@@ -160,12 +161,12 @@ const RequestForm: React.FC<props> = (props) => {
                     {/* Phone Number */}
                     <div className="flex-grow-1 me-2">
                       <label className="col-sm-2-col-form-label">
-                        <b>Phone Number</b>
+                        <b>{t("ph_1")}</b>
                       </label>
                       <Field
                         name="number"
                         type="number"
-                        placeholder="Enter Your Number"
+                        placeholder={t("phone_field")}
                         className={classNames("form-control", {
                           "is-invalid": touched.number && errors.number,
                         })}
@@ -179,12 +180,12 @@ const RequestForm: React.FC<props> = (props) => {
                     {/* Alternate Phone Number */}
                     <div className="flex-grow-1 ms-2">
                       <label className="col-sm-2-col-form-label">
-                        <b>Alternate Phone Number</b>
+                        <b>{t("ph_2")}</b>
                       </label>
                       <Field
                         name="alt_number"
                         type="number"
-                        placeholder="Enter Your Alternate Number"
+                        placeholder={t("phone_field_1")}
                         className={classNames("form-control", {
                           "is-invalid": touched.alt_number && errors.alt_number,
                         })}
@@ -202,18 +203,18 @@ const RequestForm: React.FC<props> = (props) => {
                     values.number !== "" &&
                     values.alt_number !== "" && (
                       <div className="text-danger">
-                        Phone numbers cannot be the same
+                        {t("ph_not_same")}
                       </div>
                     )}
 
                   {/* for Email id */}
                   <div>
                     <label className="col-sm-2-col-form-label">
-                      <b>Email ID</b>
+                      <b>{t("email")}</b>
                     </label>
                     <Field
                       name="email"
-                      placeholder="Enter Your Email ID"
+                      placeholder={t("email_field")}
                       className={classNames("form-control", {
                         "is-invalid": touched.email && errors.email,
                       })}
@@ -234,15 +235,15 @@ const RequestForm: React.FC<props> = (props) => {
                     </h6> */}
                       <div>
                         <label className="col-sm-2-col-form-label">
-                          <b>Full Address</b>
+                          <b>{t("address_1")}</b>
                         </label>
                       </div>
                       <label className="col-sm-2-col-form-label">
-                        Flat, House, Building, Apartment
+                      {t("address_2")}
                       </label>
                       <Field
                         name="house"
-                        placeholder="Enter Your Address"
+                        placeholder={t("address_field")}
                         className={classNames("form-control", {
                           "is-invalid":
                             touched.full_address &&
@@ -268,11 +269,11 @@ const RequestForm: React.FC<props> = (props) => {
                         <label className="col-sm-2-col-form-label"></label>
                       </div>
                       <label className="col-sm-2-col-form-label">
-                        Area, street, Sector
+                      {t("address_3")}
                       </label>
                       <Field
                         name="area"
-                        placeholder="Enter Your Address"
+                        placeholder={t("address_field")}
                         className={classNames("form-control", {
                           "is-invalid":
                             touched.full_address &&
@@ -297,11 +298,11 @@ const RequestForm: React.FC<props> = (props) => {
                     {/* landmark */}
                     <div className="flex-grow-1 me-2">
                       <label className="col-sm-2-col-form-label">
-                        Landmark
+                      {t("address_4")}
                       </label>
                       <Field
                         name="landmark"
-                        placeholder="Enter Your Address"
+                        placeholder={t("address_field")}
                         className={classNames("form-control", {
                           "is-invalid":
                             touched.full_address &&
@@ -323,11 +324,11 @@ const RequestForm: React.FC<props> = (props) => {
 
                     {/* pincode */}
                     <div className="flex-grow-1 ms-2">
-                      <label className="col-sm-2-col-form-label">Pincode</label>
+                      <label className="col-sm-2-col-form-label">{t("address_5")}</label>
                       <Field
                         name="pincode"
                         type="number"
-                        placeholder="Enter Your Pincode"
+                        placeholder={t("pincode_field")}
                         className={classNames("form-control", {
                           "is-invalid":
                             touched.full_address &&
@@ -353,15 +354,15 @@ const RequestForm: React.FC<props> = (props) => {
                     <div className="flex-grow-1 me-2">
                       <div>
                         <label className="col-sm-2-col-form-label">
-                          <b>Number of Cats with Gender</b>
+                          <b>{t("no-of-cat")}</b>
                         </label>
                       </div>
                       {/* for male */}
-                      <label className="col-sm-2-col-form-label">Male</label>
+                      <label className="col-sm-2-col-form-label">{t("male")}</label>
                       <Field
                         name="male"
                         type="number"
-                        placeholder="Number of Cats"
+                        placeholder={t("no_of_cat")}
                         className={classNames("form-control", {
                           "is-invalid":
                             touched.cats &&
@@ -386,11 +387,11 @@ const RequestForm: React.FC<props> = (props) => {
                       <div>
                         <label className="col-sm-2-col-form-label"></label>
                       </div>
-                      <label className="col-sm-2-col-form-label">Female</label>
+                      <label className="col-sm-2-col-form-label">{t("female")}</label>
                       <Field
                         name="female"
                         type="number"
-                        placeholder="Number of Cats"
+                        placeholder={t("no_of_cat")}
                         className={classNames("form-control", {
                           "is-invalid":
                             touched.cats &&
@@ -414,7 +415,7 @@ const RequestForm: React.FC<props> = (props) => {
                   {/* age of cat for below 1 yr */}
                   <div>
                     <label className="col-sm-2-col-form-label">
-                      If any cat age below one year. Please mention here
+                    {t("instruction-1")}
                     </label>
                     <Field
                       name="age"
@@ -428,7 +429,7 @@ const RequestForm: React.FC<props> = (props) => {
 
                   <div>
                     <label className="col-sm-2-col-form-label">
-                      Any Previous Recent Surgery,Illness or Pregenancy?
+                    {t("instruction-2")}
                     </label>
                     <Field
                       name="illness"
@@ -443,7 +444,7 @@ const RequestForm: React.FC<props> = (props) => {
                   {/* Picture upload field  */}
                   <div>
                     <label className="col-sm-2-col-form-label">
-                      <b>Upload Pictures of Your Cats</b>
+                      <b>{t("uplod_pics")}</b>
                     </label>
 
                     <div className="form-control d-flex align-items-center">
@@ -455,7 +456,7 @@ const RequestForm: React.FC<props> = (props) => {
                         multiple // Allow multiple picture uploads
                       />
                       <button type="button" className="btn btn-primary ms-3">
-                        Upload
+                      {t("upload")}
                       </button>
                     </div>
                   </div>
@@ -464,7 +465,7 @@ const RequestForm: React.FC<props> = (props) => {
 
                   <div>
                     <label className="col-sm-2-col-form-label">
-                      <b>Vaccination </b>(Tri-Cat)
+                      <b> {t("vaccination-1")}  </b>{t("vaccination-2")}
                     </label>
                     <div
                       style={{
@@ -474,10 +475,8 @@ const RequestForm: React.FC<props> = (props) => {
                       }}
                     >
                       <i>
-                        Vaccination is paid and won't be sponsered. Charges for
-                        vaccine is 1000/- per cat.
-                        <br /> "Bringing your cat without vaccination is at your
-                        own risk."
+                      {t("vaccination-inst-1")}
+                        <br /> {t("vaccination-inst-2")}
                       </i>
                     </div>
                     <div className="radio-group">
@@ -488,7 +487,7 @@ const RequestForm: React.FC<props> = (props) => {
                           value="yes"
                           className="form-check-input"
                         />
-                        <label className="form-check-label">Yes</label>
+                        <label className="form-check-label">{t("yes")}</label>
                       </div>
                       <div className="form-check form-check-inline">
                         <Field
@@ -497,7 +496,7 @@ const RequestForm: React.FC<props> = (props) => {
                           value="no"
                           className="form-check-input"
                         />
-                        <label className="form-check-label">No</label>
+                        <label className="form-check-label">{t("no")}</label>
                       </div>
                     </div>
                   </div>
@@ -505,12 +504,12 @@ const RequestForm: React.FC<props> = (props) => {
                   {/* for adhar card number */}
                   <div>
                     <label className="col-sm-2-col-form-label">
-                      <b>Adhar Card Number</b>
+                      <b>{t("adhar")}</b>
                     </label>
                     <Field
                       name="adhar"
                       type="number"
-                      placeholder="Enter Your Adhar-Card Number"
+                      placeholder={t("adhar_field")}
                       className={classNames("form-control", {
                         "is-invalid": touched.adhar && errors.adhar,
                       })}
@@ -524,11 +523,11 @@ const RequestForm: React.FC<props> = (props) => {
                   {/* for pan card number */}
                   <div>
                     <label className="col-sm-2-col-form-label">
-                      <b>PAN Card Number </b> (If donating)
+                    <b>{t("pan_1")}</b>{t("pan_2")}
                     </label>
                     <Field
                       name="pan"
-                      placeholder="Enter Your PAN Number"
+                      placeholder={t("pan_field")}
                       className={classNames("form-control", {
                         "is-invalid": touched.pan && errors.pan,
                       })}
@@ -543,8 +542,8 @@ const RequestForm: React.FC<props> = (props) => {
 
                   <div>
                     <label className="col-sm-2-col-form-label">
-                      <b>Need of Transport</b>
-                      <i> (It is paid & won't be sponsored)</i>
+                    <b>{t("transport-1")}</b>
+                    <i> {t("transport-2")}</i>
                     </label>
                     <div className="radio-group">
                       <div className="form-check form-check-inline">
@@ -554,7 +553,7 @@ const RequestForm: React.FC<props> = (props) => {
                           value="yes"
                           className="form-check-input"
                         />
-                        <label className="form-check-label">Yes</label>
+                        <label className="form-check-label">{t("yes")}</label>
                       </div>
                       <div className="form-check form-check-inline">
                         <Field
@@ -563,7 +562,7 @@ const RequestForm: React.FC<props> = (props) => {
                           value="no"
                           className="form-check-input"
                         />
-                        <label className="form-check-label">No</label>
+                        <label className="form-check-label">{t("no")}</label>
                       </div>
                     </div>
                   </div>
@@ -574,11 +573,11 @@ const RequestForm: React.FC<props> = (props) => {
                     <>
                       <div>
                         <label className="col-sm-2-col-form-label">
-                          <b>GPS Location</b>
+                          <b>{t("gps_1")}</b>
                         </label>
                         <Field
                           name="gpsLocation"
-                          placeholder="Paste your Google Location Here"
+                          placeholder={t("gps_2")}
                           className={classNames("form-control", {
                             "is-invalid":
                               touched.gpsLocation && errors.gpsLocation,
@@ -596,8 +595,8 @@ const RequestForm: React.FC<props> = (props) => {
 
                       <div>
                         <label className="col-sm-2-col-form-label">
-                          <b>Need of Traps</b>
-                          <i> (Only if Feral Cats are wary of People)</i>
+                        <b>{t("traps_1")}</b>
+                        <i> {t("traps_2")}</i>
                         </label>
                         <div className="radio-group">
                           <div className="form-check form-check-inline">
@@ -607,7 +606,7 @@ const RequestForm: React.FC<props> = (props) => {
                               value="yes"
                               className="form-check-input"
                             />
-                            <label className="form-check-label">Yes</label>
+                            <label className="form-check-label">{t("yes")}</label>
                           </div>
                           <div className="form-check form-check-inline">
                             <Field
@@ -616,7 +615,7 @@ const RequestForm: React.FC<props> = (props) => {
                               value="no"
                               className="form-check-input"
                             />
-                            <label className="form-check-label">No</label>
+                            <label className="form-check-label">{t("no")}</label>
                           </div>
                         </div>
                       </div>
@@ -627,7 +626,7 @@ const RequestForm: React.FC<props> = (props) => {
 
                   <div>
                     <label className="col-sm-2-col-form-label">
-                      <b>Post Operative Care</b>
+                    <b>{t("post-op-1")}</b>
                       <div
                         style={{
                           fontStyle: "italic",
@@ -636,10 +635,7 @@ const RequestForm: React.FC<props> = (props) => {
                         }}
                       >
                         <i>
-                          Cats need post operative care after surgery to recover
-                          from the effects of anesthesia and to keep them
-                          vulnerable. Please click "Yes" only if you are not
-                          able to take care of them.
+                        {t("post-op-2")}
                         </i>
                       </div>
                     </label>
@@ -652,7 +648,7 @@ const RequestForm: React.FC<props> = (props) => {
                           value="yes"
                           className="form-check-input"
                         />
-                        <label className="form-check-label">Yes</label>
+                        <label className="form-check-label">{t("yes")}</label>
                       </div>
                       <div className="form-check form-check-inline">
                         <Field
@@ -661,7 +657,7 @@ const RequestForm: React.FC<props> = (props) => {
                           value="no"
                           className="form-check-input"
                         />
-                        <label className="form-check-label">No</label>
+                        <label className="form-check-label">{t("no")}</label>
                       </div>
                     </div>
                   </div>
@@ -685,13 +681,13 @@ const RequestForm: React.FC<props> = (props) => {
                           className="btn btn-warning"
                           // onClick={clearForm}
                         >
-                          Clear
+                          {t("clear")}
                         </button>
                       </div>
                       <div className="p-3 ">
                         <Link href="/">
                           <button type="button" className="btn btn-danger">
-                            Cancel
+                          {t("cancel")}
                           </button>
                         </Link>
                       </div>

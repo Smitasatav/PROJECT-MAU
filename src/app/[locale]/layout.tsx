@@ -3,6 +3,7 @@ import "bootstrap/dist/css/bootstrap.css";
 import { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -30,6 +31,7 @@ export default function RootLayout({
       <NextIntlClientProvider locale={locale} messages={messages}>
         <Navbar/>
         <div className="background-container">{children}</div>
+        <Footer/>
         </NextIntlClientProvider>
       </body>
     </html>);
