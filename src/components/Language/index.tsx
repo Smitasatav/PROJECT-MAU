@@ -2,7 +2,7 @@
 import { useLocale } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
-// import "./style.css";
+import "./style.css";
 
 export default function Lang() {
   // const [isPending, startTransition] = useTransition();
@@ -23,7 +23,7 @@ export default function Lang() {
           <div className="my-2">
             <button
               type="button"
-              className="btn btn-primary p-2"
+              className="btn btn-primary p-2 button-fixed-size"
               onClick={() => onSelectChange("en")}
             >
               ENGLISH
@@ -32,7 +32,7 @@ export default function Lang() {
           <div className="my-2">
             <button
               type="button"
-              className="btn btn-primary py-2 px-3"
+              className="btn btn-primary py-2 px-3 button-fixed-size"
               onClick={() => onSelectChange("hi")}
             >
               हिंदी
@@ -41,7 +41,7 @@ export default function Lang() {
           <div className="my-2">
             <button
               type="button"
-              className="btn btn-primary py-2 px-3"
+              className="btn btn-primary py-2 px-3 button-fixed-size"
               onClick={() => onSelectChange("mh")}
             >
               मराठी

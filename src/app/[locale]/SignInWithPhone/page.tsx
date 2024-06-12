@@ -11,31 +11,39 @@ import PhoneInput from "react-phone-input-2";
 import OtpInput from "react-otp-input";
 import "react-phone-input-2/lib/style.css";
 import { app } from "@/components/firebase";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const auth = getAuth(app);
 
 export default function PhoneSignIn() {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [otp, setOtp] = useState("");
+  const [otpSent, setOtpSent] = useState(false);
   const [confirmationResult, setConfirmationResult] =
     useState<ConfirmationResult | null>(null);
 
   const getOTP = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
     try {
-      const recaptcha = new RecaptchaVerifier(auth, "recaptcha-container", {});
+      // const recaptcha = new RecaptchaVerifier(auth, "recaptcha-container", {});
+      // const appVerifier = window.recaptchaVerifier;
+      const recaptcha = new RecaptchaVerifier(auth, "recaptcha-container", {
+        size: "invisible",
+        callback: () => {},
+        "expired-callback": () => {},
+      });
       const confirmation = await signInWithPhoneNumber(
         auth,
         `+${phoneNumber}`,
         recaptcha
       );
       setConfirmationResult(confirmation);
-      console.log("OTP sent successfully!");
+      setOtpSent(true);
       toast("OTP sent successfully!");
     } catch (error) {
-      console.log("Error sending OTP:", error);
+      console.error("Error sending OTP:", error);
+      toast.error("Failed to send OTP. Please try again.");
     }
   };
 
@@ -44,18 +52,19 @@ export default function PhoneSignIn() {
       if (confirmationResult) {
         const code = otp;
         await confirmationResult.confirm(code);
-        console.log("User signed in successfully!");
         toast("User signed in successfully!");
       } else {
         throw new Error("Confirmation result is not available.");
       }
     } catch (error) {
-      console.log("Error verifying OTP:", error);
+      console.error("Error verifying OTP:", error);
+      toast.error("Invalid OTP. Please try again.");
     }
   };
 
   return (
     <div className="container">
+      <ToastContainer />
       <h4 className="fw-bold text-center my-3">Login With Phone</h4>
       <div className="d-flex justify-content-center">
         <div
@@ -103,43 +112,45 @@ export default function PhoneSignIn() {
                 Send OTP
               </button>
             </div>
-            <ToastContainer />
           </div>
           <div
             id="recaptcha-container"
             className="d-flex justify-content-center mx-3"
           ></div>
-          <div className="row justify-content-center">
-            <div className="col-sm-6 p-3 mx-4">
-              <label
-                htmlFor="validationTextarea"
-                className=" fw-bold form-label"
-              >
-                Enter OTP
-              </label>
-              <OtpInput
-                value={otp}
-                onChange={setOtp}
-                numInputs={6}
-                renderSeparator={<span>-</span>}
-                renderInput={(props) => <input {...props} />}
-                inputType="tel"
-                containerStyle={{ width: "120%" }}
-                inputStyle={{ width: "100%", padding: "5px" }}
-              />
-            </div>
-          </div>
-          <div className="buttons">
-            <div
-              className="d-flex flex-row justify-content-center"
-              style={{ marginTop: "-10px" }}
-            >
-              <button className="btn btn-primary px-3" onClick={verifyOTP}>
-                Verify OTP
-              </button>
-            </div>
-            <ToastContainer />
-          </div>
+          {otpSent && (
+            <>
+              <div className="row justify-content-center">
+                <div className="col-sm-6 p-3 mx-4">
+                  <label
+                    htmlFor="validationTextarea"
+                    className=" fw-bold form-label"
+                  >
+                    Enter OTP
+                  </label>
+                  <OtpInput
+                    value={otp}
+                    onChange={setOtp}
+                    numInputs={6}
+                    renderSeparator={<span>-</span>}
+                    renderInput={(props) => <input {...props} />}
+                    inputType="tel"
+                    containerStyle={{ width: "120%" }}
+                    inputStyle={{ width: "100%", padding: "5px" }}
+                  />
+                </div>
+              </div>
+              <div className="buttons">
+                <div
+                  className="d-flex flex-row justify-content-center"
+                  style={{ marginTop: "-10px" }}
+                >
+                  <button className="btn btn-primary px-3" onClick={verifyOTP}>
+                    Verify OTP
+                  </button>
+                </div>
+              </div>
+            </>
+          )}
         </div>
       </div>
     </div>
