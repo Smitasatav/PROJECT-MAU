@@ -1,6 +1,7 @@
 import { NextIntlClientProvider, useMessages } from "next-intl";
 import "bootstrap/dist/css/bootstrap.css";
 import { Metadata } from "next";
+import "./globals.css";
 import { Inter } from "next/font/google";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";

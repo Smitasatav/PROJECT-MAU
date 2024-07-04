@@ -1,7 +1,8 @@
-"use client"
+"use client";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n";
 import { useState } from "react";
+import steps from "./config"; // Adjust the path if necessary
 
 export default function Guidelines() {
   const [isChecked, setIsChecked] = useState(false);
@@ -10,55 +11,22 @@ export default function Guidelines() {
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIsChecked(e.target.checked);
   };
+
   return (
     <div className="container">
       <h5 className="fw-bold text-center my-3">{t("heading")}</h5>
       <ol className="list-group list-group-numbered my-2">
-        <li className="list-group-item d-flex justify-content-between align-items-start">
-          <div className="ms-2 me-auto">{t("step_1")}</div>
-        </li>
-        <li className="list-group-item d-flex justify-content-between align-items-start">
-          <div className="ms-2 me-auto">{t("step_2")}</div>
-        </li>
-        <li className="list-group-item d-flex justify-content-between align-items-start">
-          <div className="ms-2 me-auto">{t("step_3")}</div>
-        </li>
-        <li className="list-group-item d-flex justify-content-between align-items-start">
-          <div className="ms-2 me-auto">{t("step_4")}</div>
-        </li>
-        <li className="list-group-item d-flex justify-content-between align-items-start">
-          <div className="ms-2 me-auto">{t("step_5")}</div>
-        </li>
-        <li className="list-group-item d-flex justify-content-between align-items-start">
-          <div className="ms-2 me-auto">{t("step_6")}</div>
-        </li>
-        <li className="list-group-item d-flex justify-content-between align-items-start">
-          <div className="ms-2 me-auto">{t("step_7")} </div>
-        </li>
-        <li className="list-group-item d-flex justify-content-between align-items-start">
-          <div className="ms-2 me-auto">{t("step_8")}</div>
-        </li>
-        <li className="list-group-item d-flex justify-content-between align-items-start">
-          <div className="ms-2 me-auto">{t("step_9")} </div>
-        </li>
-        <li className="list-group-item d-flex justify-content-between align-items-start">
-          <div className="ms-2 me-auto">{t("step_10")}</div>
-        </li>
-        <li className="list-group-item d-flex justify-content-between align-items-start">
-          <div className="ms-2 me-auto">{t("step_11")}</div>
-        </li>
-        <li className="list-group-item d-flex justify-content-between align-items-start">
-          <div className="ms-2 me-auto">{t("step_12")}</div>
-        </li>
-        <li className="list-group-item d-flex justify-content-between align-items-start">
-          <div className="ms-2 me-auto">{t("step_13")}</div>
-        </li>
-        <li className="list-group-item d-flex justify-content-between align-items-start">
-          <div className="ms-2 me-auto">{t("step_14")}</div>
-        </li>
+        {steps.map((step, index) => (
+          <li
+            key={index}
+            className="list-group-item d-flex justify-content-between align-items-start"
+          >
+            <div className="ms-2 me-auto">{t(step)}</div>
+          </li>
+        ))}
       </ol>
       <div className="form-check mt-2">
-      <input
+        <input
           className="form-check-input"
           type="checkbox"
           value=""
@@ -88,7 +56,7 @@ export default function Guidelines() {
               {t("next")}
             </button>
           </Link>
-        </div>       
+        </div>
       </div>
     </div>
   );

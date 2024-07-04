@@ -1,8 +1,11 @@
 import Lang from "@/components/Language";
+import Table from "@/components/Table";
 
 export default function Home() {
   return (
-    // <Guidelines/>
-    <Lang/>
+    <main>
+      <Lang />
+      {/* <Table/> */}
+    </main>
   );
 }
